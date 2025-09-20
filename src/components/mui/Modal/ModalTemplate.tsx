@@ -54,7 +54,7 @@ export default function ModalTemplate(
             open={open}
             onClose={onClickClose}
         >
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle ref={element => element?.focus()}>{title}</DialogTitle>
             <DialogContent>
                 {content}
             </DialogContent>
