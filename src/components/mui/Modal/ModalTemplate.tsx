@@ -7,6 +7,7 @@ export interface ModalTemplateProps {
     open: boolean;
     handleOpen: (open: boolean) => void;
     onClickConfirm: () => void;
+    onClickCancel: () => void;
     title: string;
     content: React.ReactNode;
     confirmButtonLabel?: ModalButtonsProps["confirmButtonLabel"];
@@ -20,6 +21,7 @@ export interface ModalTemplateProps {
  * @param title modal 제목
  * @param message modal 메세지
  * @param onClickConfirm modal 확인 클릭 시 호출
+ * @param onClickCancel modal 취소 클릭 시 호출
  * @param confirmButtonLabel 확인 버튼 라벨
  * @param closeButtonLabel 닫기 버튼 라벨
  */
@@ -30,13 +32,15 @@ export default function ModalTemplate(
         title,
         content,
         onClickConfirm,
+        onClickCancel,
         confirmButtonLabel,
         closeButtonLabel,
     }: ModalTemplateProps
 ){
     const onClickClose = useCallback(() => {
         handleOpen(false);
-    }, [handleOpen]);
+        onClickCancel?.()
+    }, [handleOpen, onClickCancel]);
     const onClickConfirmButton = useCallback(() => {
         onClickConfirm?.();
         onClickClose();

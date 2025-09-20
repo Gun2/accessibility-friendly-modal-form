@@ -6,6 +6,7 @@ interface ShowModalParams {
     title: ModalProps["title"];
     message: ModalProps["message"];
     onClickConfirm: ModalProps["onClickConfirm"];
+    onClickCancel: ModalProps["onClickCancel"];
 }
 
 export interface UseModalParams {
@@ -21,6 +22,7 @@ export interface UseModalResult {
      * @param message 내용
      */
     openModal: (params: ShowModalParams) => void;
+    setMessage: (message: React.ReactNode) => void;
 
 }
 
@@ -37,12 +39,16 @@ export const useModal = (
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState<React.ReactNode>('');
     const [onClickConfirm, setOnClickConfirm] = useState<ModalProps["onClickConfirm"]>(() => {})
+    const [onClickCancel, setOnCancelConfirm] = useState<ModalProps["onClickCancel"]>(() => {})
+
     const openModal = useCallback((params : ShowModalParams) => {
         setTitle(params.title);
         setMessage(params.message);
         setOnClickConfirm(() => params.onClickConfirm);
+        setOnCancelConfirm(() => params.onClickCancel);
         handleOpen(true);
     }, [handleOpen]);
+
     return {
         modalProps : {
             open,
@@ -50,10 +56,12 @@ export const useModal = (
             title,
             message,
             onClickConfirm,
+            onClickCancel,
             confirmButtonLabel,
             cancelButtonLabel,
         },
         openModal: openModal,
+        setMessage
     }
 
 }

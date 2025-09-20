@@ -7,6 +7,7 @@ export interface ModalProps {
     title: ModalTemplateProps["title"];
     message: ModalTemplateProps["content"];
     onClickConfirm: ModalTemplateProps["onClickConfirm"];
+    onClickCancel: ModalTemplateProps["onClickCancel"];
     confirmButtonLabel: ModalTemplateProps["confirmButtonLabel"];
     cancelButtonLabel: ModalTemplateProps["closeButtonLabel"];
 }
@@ -21,6 +22,7 @@ export default function Modal(
         title,
         message,
         onClickConfirm,
+        onClickCancel,
     }: ModalProps
 ){
     return (
@@ -30,6 +32,7 @@ export default function Modal(
             title={title}
             content={message}
             onClickConfirm={onClickConfirm}
+            onClickCancel={onClickCancel}
         />
     )
 };
