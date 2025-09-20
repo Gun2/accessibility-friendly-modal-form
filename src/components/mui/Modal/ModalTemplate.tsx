@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import {Button, Dialog, DialogContent, DialogTitle, Stack, styled} from "@mui/material";
 import ModalButtons, {type ModalButtonsProps} from "./button/ModalButtons";
+import {useEscapeKey} from "../../../hooks/useEscapeKey";
 
 export interface ModalTemplateProps {
     open: boolean;
@@ -40,9 +41,14 @@ export default function ModalTemplate(
         onClickConfirm?.();
         onClickClose();
     }, [onClickClose, onClickConfirm]);
+    useEscapeKey(() => {
+        onClickClose();
+    })
     return (
         <CustomDialog
-             open={open}
+            disableEscapeKeyDown={true}
+            open={open}
+            onClose={onClickClose}
         >
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>
