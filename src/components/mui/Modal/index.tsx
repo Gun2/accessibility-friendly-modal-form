@@ -27,6 +27,8 @@ export default function Modal(
         defaultContent,
         onClickConfirm,
         onClickCancel,
+        confirmButtonLabel,
+        cancelButtonLabel,
     }: ModalProps
 ){
     return (
@@ -37,6 +39,8 @@ export default function Modal(
             content={content ?? defaultContent ?? ''}
             onClickConfirm={onClickConfirm}
             onClickCancel={onClickCancel}
+            confirmButtonLabel={confirmButtonLabel}
+            closeButtonLabel={cancelButtonLabel}
         />
     )
 };
