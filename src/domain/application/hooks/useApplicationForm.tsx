@@ -1,5 +1,5 @@
 import {useCallback, useState} from "react";
-import {type ApplicationFormData, ApplicationFormSchema, createInitData} from "../../../pages/Home/ApplicationForm";
+import {type ApplicationFormData, ApplicationFormSchema, createInitData} from "../ApplicationForm";
 import type {ValidationErrors} from "../../../types/validationErrors.type";
 import zodUtils from "../../../utils/zodUtils";
 

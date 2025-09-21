@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import ApplicationForm, {type ApplicationFormData, type ApplicationFormProps, createInitData} from "./ApplicationForm";
-import {FormHelperText, Stack, Typography} from "@mui/material";
+import React from "react";
+import ApplicationForm, {type ApplicationFormProps} from "./ApplicationForm";
+import {FormHelperText, Stack} from "@mui/material";
 
 export interface ApplicationFormWrapProps extends ApplicationFormProps {
 }

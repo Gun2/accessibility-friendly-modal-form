@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 import Modal from "../../components/mui/Modal";
 import {useFormModal} from "../../components/mui/FormModal/hooks/useFormModal";
 import {useApplicationForm} from "./hooks/useApplicationForm";
-import ApplicationForm from "../../pages/Home/ApplicationForm";
+import ApplicationForm from "./ApplicationForm";
 
 /**
  * 신청 폼 작성하기 버튼
