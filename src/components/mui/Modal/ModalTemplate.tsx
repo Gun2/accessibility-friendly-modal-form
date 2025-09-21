@@ -6,7 +6,8 @@ import {useEscapeKey} from "../../../hooks/useEscapeKey";
 export interface ModalTemplateProps {
     open: boolean;
     handleOpen: (open: boolean) => void;
-    onClickConfirm: () => void;
+    //확인 버튼 클릭 시 수행 함수, 반환값이 false일 경우 로직을 중단시킴
+    onClickConfirm: () => undefined | void | boolean;
     onClickCancel: () => void;
     title: string;
     content: React.ReactNode;
@@ -42,8 +43,10 @@ export default function ModalTemplate(
         onClickCancel?.()
     }, [handleOpen, onClickCancel]);
     const onClickConfirmButton = useCallback(() => {
-        onClickConfirm?.();
-        onClickClose();
+        const result = onClickConfirm?.();
+        if (result !== false) {
+            onClickClose();
+        }
     }, [onClickClose, onClickConfirm]);
     useEscapeKey(() => {
         onClickClose();

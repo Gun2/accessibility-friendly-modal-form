@@ -3,6 +3,8 @@ import {useModal} from "../../Modal/hooks/useModal";
 import type {ModalProps} from "../../Modal";
 
 export interface UseModalParams<T> {
+    //확인 전 로직 수행 (false 반환 시 확인 로직을 중단함)
+    beforeConfirm?: (data: T) => boolean;
     confirmButtonLabel?: ModalProps["confirmButtonLabel"];
     cancelButtonLabel?: ModalProps["cancelButtonLabel"];
     defaultTitle?: ModalProps["defaultTitle"];
@@ -29,6 +31,7 @@ export const useFormModal = <T>(
     {
         form,
         defaultTitle,
+        beforeConfirm,
         confirmButtonLabel,
         cancelButtonLabel,
         data
@@ -49,12 +52,20 @@ export const useFormModal = <T>(
         return new Promise<T | null>(resolve => {
             openModal({
                 title: title,
-                onClickConfirm: () => resolve(dataRef.current),
+                onClickConfirm: () => {
+                    const process = beforeConfirm ? beforeConfirm(dataRef.current) : true;
+                    if (process) {
+                        resolve(dataRef.current)
+                        return true;
+                    }else {
+                        return false;
+                    }
+                },
                 onClickCancel: () => resolve(null),
             })
         })
 
-    }, [openModal, data]);
+    }, [openModal, data, beforeConfirm]);
 
     return {
         modalProps,

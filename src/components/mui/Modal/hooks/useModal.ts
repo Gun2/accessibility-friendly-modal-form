@@ -49,7 +49,7 @@ export const useModal = (
     const openModal = useCallback((params : ShowModalParams) => {
         setTitle(params.title ?? undefined);
         setMessage(params.content ?? undefined);
-        setOnClickConfirm(() => params.onClickConfirm);
+        setOnClickConfirm(() => () => params?.onClickConfirm?.());
         setOnCancelConfirm(() => params.onClickCancel);
         handleOpen(true);
     }, [handleOpen]);

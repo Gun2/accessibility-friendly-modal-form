@@ -10,3 +10,10 @@
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
+## Zod
+유효성 검증을 위해 사용
+### 설치
+```shell
+npm install zod
+```
+
