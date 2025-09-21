@@ -18,7 +18,7 @@ export interface UseModalParams {
     //내용 기본값 (내용 미 입력 시 기본적으로 사용됨)
     defaultContent?: ModalProps["content"];
     confirmButtonLabel?: ModalTemplateProps["confirmButtonLabel"];
-    cancelButtonLabel?: ModalTemplateProps["closeButtonLabel"];
+    closeButtonLabel?: ModalTemplateProps["closeButtonLabel"];
 }
 
 export interface UseModalResult {
@@ -38,7 +38,7 @@ export const useModal = (
         defaultDescription,
         defaultContent,
         confirmButtonLabel,
-        cancelButtonLabel,
+        closeButtonLabel,
     }: UseModalParams = {}
 ) : UseModalResult => {
     const [open, setOpen] = useState(false);
@@ -70,7 +70,7 @@ export const useModal = (
             onClickConfirm,
             onClickCancel,
             confirmButtonLabel,
-            cancelButtonLabel,
+            closeButtonLabel: closeButtonLabel,
         },
         openModal: openModal,
     }

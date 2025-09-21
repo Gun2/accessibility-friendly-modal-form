@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
-import {Dialog, DialogContent, DialogTitle, Fade, FormHelperText, styled} from "@mui/material";
+import {DialogContent, DialogTitle, FormHelperText, styled} from "@mui/material";
 import ModalButtons, {type ModalButtonsProps} from "./button/ModalButtons";
-import {useEscapeKey} from "../../../hooks/useEscapeKey";
+import BaseModal from "./BaseModal";
 
 export interface ModalTemplateProps {
     open: boolean;
@@ -22,7 +22,7 @@ export interface ModalTemplateProps {
  * @param open modal 표시 상태
  * @param handleOpen modal 표시 상태 핸들링
  * @param title modal 제목
- * @param message modal 메세지
+ * @param content modal 내용
  * @param description modal 설명
  * @param onClickConfirm modal 확인 클릭 시 호출
  * @param onClickCancel modal 취소 클릭 시 호출
@@ -52,19 +52,12 @@ export default function ModalTemplate(
             onClickClose();
         }
     }, [onClickClose, onClickConfirm]);
-    useEscapeKey(() => {
-        onClickClose();
-    })
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     return (
-        <CustomDialog
-            TransitionComponent={prefersReducedMotion ? React.Fragment : Fade}
+        <BaseModal
             aria-modal="true"
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
-            disableEscapeKeyDown={true}
+            disableEscapeKeyDown={false}
             open={open}
             onClose={onClickClose}
         >
@@ -90,16 +83,9 @@ export default function ModalTemplate(
                 />
             </DialogContent>
 
-        </CustomDialog>
+        </BaseModal>
     );
 };
-
-const CustomDialog = styled(Dialog)((props) => ({
-    "& .MuiPaper-root" : {
-        minWidth: 300
-    }
-}))
-
 
 /**
  * 설명 문구

@@ -6,7 +6,7 @@ export interface UseModalParams<T> {
     //확인 전 로직 수행 (false 반환 시 확인 로직을 중단함)
     beforeConfirm?: (data: T) => boolean;
     confirmButtonLabel?: ModalProps["confirmButtonLabel"];
-    cancelButtonLabel?: ModalProps["cancelButtonLabel"];
+    cancelButtonLabel?: ModalProps["closeButtonLabel"];
     defaultTitle?: ModalProps["title"];
     defaultDescription?: ModalProps["description"];
     form: React.ReactNode;
@@ -42,7 +42,7 @@ export const useFormModal = <T>(
 ) : UseFormModalResult<T> => {
     const {modalProps, openModal} = useModal({
         confirmButtonLabel,
-        cancelButtonLabel,
+        closeButtonLabel: cancelButtonLabel,
         defaultTitle: defaultTitle,
         defaultDescription: defaultDescription,
         defaultContent: form,

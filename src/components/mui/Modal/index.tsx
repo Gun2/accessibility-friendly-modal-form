@@ -10,7 +10,7 @@ export interface ModalProps {
     onClickConfirm: ModalTemplateProps["onClickConfirm"];
     onClickCancel: ModalTemplateProps["onClickCancel"];
     confirmButtonLabel: ModalTemplateProps["confirmButtonLabel"];
-    cancelButtonLabel: ModalTemplateProps["closeButtonLabel"];
+    closeButtonLabel: ModalTemplateProps["closeButtonLabel"];
 }
 
 /**
@@ -26,7 +26,7 @@ export default function Modal(
         onClickConfirm,
         onClickCancel,
         confirmButtonLabel,
-        cancelButtonLabel,
+        closeButtonLabel,
     }: ModalProps
 ){
     return (
@@ -39,7 +39,7 @@ export default function Modal(
             onClickConfirm={onClickConfirm}
             onClickCancel={onClickCancel}
             confirmButtonLabel={confirmButtonLabel}
-            closeButtonLabel={cancelButtonLabel}
+            closeButtonLabel={closeButtonLabel}
         />
     )
 };
