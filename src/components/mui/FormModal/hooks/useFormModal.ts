@@ -7,7 +7,7 @@ export interface UseModalParams<T> {
     beforeConfirm?: (data: T) => boolean;
     confirmButtonLabel?: ModalProps["confirmButtonLabel"];
     cancelButtonLabel?: ModalProps["cancelButtonLabel"];
-    defaultTitle?: ModalProps["defaultTitle"];
+    defaultTitle?: ModalProps["title"];
     defaultDescription?: ModalProps["description"];
     form: React.ReactNode;
     data: T

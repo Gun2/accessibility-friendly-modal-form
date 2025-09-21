@@ -12,11 +12,11 @@ interface ShowModalParams {
 
 export interface UseModalParams {
     //제목 기본값 (제목 미 입력 시 기본적으로 사용됨)
-    defaultTitle?: ModalProps["defaultTitle"];
+    defaultTitle?: ModalProps["title"];
     //설명 기본값 (설명 미 입력 시 기본적으로 사용됨)
     defaultDescription?: ModalProps["description"];
     //내용 기본값 (내용 미 입력 시 기본적으로 사용됨)
-    defaultContent?: ModalProps["defaultContent"];
+    defaultContent?: ModalProps["content"];
     confirmButtonLabel?: ModalTemplateProps["confirmButtonLabel"];
     cancelButtonLabel?: ModalTemplateProps["closeButtonLabel"];
 }
@@ -47,14 +47,14 @@ export const useModal = (
     }, []);
     const [title, setTitle] = useState<string>();
     const [description, setDescription] = useState<string>()
-    const [message, setMessage] = useState<React.ReactNode>();
+    const [content, setContent] = useState<React.ReactNode>();
     const [onClickConfirm, setOnClickConfirm] = useState<ModalProps["onClickConfirm"]>(() => {})
     const [onClickCancel, setOnCancelConfirm] = useState<ModalProps["onClickCancel"]>(() => {})
 
     const openModal = useCallback((params : ShowModalParams) => {
         setTitle(params.title ?? undefined);
         setDescription(params.description ?? defaultDescription);
-        setMessage(params.content ?? undefined);
+        setContent(params.content ?? undefined);
         setOnClickConfirm(() => () => params?.onClickConfirm?.());
         setOnCancelConfirm(() => params.onClickCancel);
         handleOpen(true);
@@ -64,15 +64,13 @@ export const useModal = (
         modalProps : {
             open,
             handleOpen,
-            title,
+            title : title ?? defaultTitle,
             description,
-            content: message,
+            content: content ?? defaultContent,
             onClickConfirm,
             onClickCancel,
             confirmButtonLabel,
             cancelButtonLabel,
-            defaultTitle: defaultTitle,
-            defaultContent: defaultContent,
         },
         openModal: openModal,
     }
