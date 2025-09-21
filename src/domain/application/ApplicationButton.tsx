@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 import {Button} from "@mui/material";
 import Modal from "../../components/mui/Modal";
 import {useFormModal} from "../../components/mui/FormModal/hooks/useFormModal";
-import ApplicationFormWrap from "../../pages/Home/ApplicationFormWrap";
 import {useApplicationForm} from "./hooks/useApplicationForm";
+import ApplicationForm from "../../pages/Home/ApplicationForm";
 
 /**
  * 신청 폼 작성하기 버튼
@@ -12,10 +12,11 @@ import {useApplicationForm} from "./hooks/useApplicationForm";
 export default function ApplicationButton(){
     const {data, setData, validate, validationErrors, initData} = useApplicationForm();
     const {openFromModal, modalProps} = useFormModal({
-        form: <ApplicationFormWrap data={data} onChange={setData} validationErrors={validationErrors}/>,
+        form: <ApplicationForm data={data} onChange={setData} validationErrors={validationErrors}/>,
         data: data,
         confirmButtonLabel: "제출하기",
         defaultTitle: "신청 폼",
+        defaultDescription: "이메일과 FE 경력 연차 등 간단한 정보를 입력해주세요.",
         beforeConfirm: (formData) => {
             const validationResult = validate(formData);
             return validationResult.success;
