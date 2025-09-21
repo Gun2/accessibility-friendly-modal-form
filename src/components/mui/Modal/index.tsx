@@ -5,6 +5,7 @@ export interface ModalProps {
     open : ModalTemplateProps["open"];
     handleOpen: ModalTemplateProps["handleOpen"];
     title?: ModalTemplateProps["title"];
+    description?: ModalTemplateProps["description"];
     defaultTitle?: ModalTemplateProps["title"];
     content?: ModalTemplateProps["content"];
     defaultContent?: ModalTemplateProps["content"];
@@ -22,6 +23,7 @@ export default function Modal(
         open,
         handleOpen,
         title,
+        description,
         content,
         defaultTitle,
         defaultContent,
@@ -36,6 +38,7 @@ export default function Modal(
             open={open}
             handleOpen={handleOpen}
             title={title ?? defaultTitle ?? ''}
+            description={description}
             content={content ?? defaultContent ?? ''}
             onClickConfirm={onClickConfirm}
             onClickCancel={onClickCancel}

@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Button, Dialog, DialogContent, DialogTitle, Stack, styled} from "@mui/material";
+import {Dialog, DialogContent, DialogTitle, FormHelperText, styled} from "@mui/material";
 import ModalButtons, {type ModalButtonsProps} from "./button/ModalButtons";
 import {useEscapeKey} from "../../../hooks/useEscapeKey";
 
@@ -10,6 +10,8 @@ export interface ModalTemplateProps {
     onClickConfirm: () => undefined | void | boolean;
     onClickCancel: () => void;
     title: string;
+    //설명
+    description?: string;
     content: React.ReactNode;
     confirmButtonLabel?: ModalButtonsProps["confirmButtonLabel"];
     closeButtonLabel?: ModalButtonsProps["closeButtonLabel"];
@@ -21,6 +23,7 @@ export interface ModalTemplateProps {
  * @param handleOpen modal 표시 상태 핸들링
  * @param title modal 제목
  * @param message modal 메세지
+ * @param description modal 설명
  * @param onClickConfirm modal 확인 클릭 시 호출
  * @param onClickCancel modal 취소 클릭 시 호출
  * @param confirmButtonLabel 확인 버튼 라벨
@@ -32,6 +35,7 @@ export default function ModalTemplate(
         handleOpen,
         title,
         content,
+        description,
         onClickConfirm,
         onClickCancel,
         confirmButtonLabel,
@@ -58,6 +62,15 @@ export default function ModalTemplate(
             onClose={onClickClose}
         >
             <DialogTitle ref={element => element?.focus()}>{title}</DialogTitle>
+            {
+                description && (
+                    <DialogContent>
+                        <Description>
+                            {description}
+                        </Description>
+                    </DialogContent>
+                )
+            }
             <DialogContent>
                 {content}
             </DialogContent>
@@ -79,3 +92,11 @@ const CustomDialog = styled(Dialog)((props) => ({
         minWidth: 300
     }
 }))
+
+
+/**
+ * 설명 문구
+ * @constructor
+ */
+
+const Description = styled(FormHelperText)({})

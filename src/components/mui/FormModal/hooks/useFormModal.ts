@@ -8,6 +8,7 @@ export interface UseModalParams<T> {
     confirmButtonLabel?: ModalProps["confirmButtonLabel"];
     cancelButtonLabel?: ModalProps["cancelButtonLabel"];
     defaultTitle?: ModalProps["defaultTitle"];
+    defaultDescription?: ModalProps["description"];
     form: React.ReactNode;
     data: T
 }
@@ -25,6 +26,7 @@ export interface UseFormModalResult<T> {
 
 export interface OpenFormModalParams {
     title?: ModalProps["title"]
+    description?: ModalProps["description"]
 }
 
 export const useFormModal = <T>(
@@ -34,6 +36,7 @@ export const useFormModal = <T>(
         beforeConfirm,
         confirmButtonLabel,
         cancelButtonLabel,
+        defaultDescription,
         data
     }: UseModalParams<T>
 ) : UseFormModalResult<T> => {
@@ -41,6 +44,7 @@ export const useFormModal = <T>(
         confirmButtonLabel,
         cancelButtonLabel,
         defaultTitle: defaultTitle,
+        defaultDescription: defaultDescription,
         defaultContent: form,
     });
     const dataRef = useRef<T>(data);
@@ -48,10 +52,11 @@ export const useFormModal = <T>(
         dataRef.current = data;
     }, [data]);
 
-    const openFormModal = useCallback(({title} : OpenFormModalParams = {}) : Promise<T | null> => {
+    const openFormModal = useCallback(({title, description} : OpenFormModalParams = {}) : Promise<T | null> => {
         return new Promise<T | null>(resolve => {
             openModal({
                 title: title,
+                description: description,
                 onClickConfirm: () => {
                     const process = beforeConfirm ? beforeConfirm(dataRef.current) : true;
                     if (process) {
