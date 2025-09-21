@@ -26,7 +26,6 @@ export interface UseModalResult {
      * @param content 내용
      */
     openModal: (params: ShowModalParams) => void;
-    setContent: (content: React.ReactNode) => void;
 
 }
 
@@ -69,7 +68,6 @@ export const useModal = (
             defaultContent: defaultContent,
         },
         openModal: openModal,
-        setContent: setMessage
     }
 
 }

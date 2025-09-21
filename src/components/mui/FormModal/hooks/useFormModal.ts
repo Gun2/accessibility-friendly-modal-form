@@ -29,7 +29,7 @@ export const useFormModal = <T>(
         data
     }: UseModalParams<T>
 ) : UseFormModalResult<T> => {
-    const {modalProps, openModal, setContent} = useModal({
+    const {modalProps, openModal} = useModal({
         confirmButtonLabel,
         cancelButtonLabel,
     });
