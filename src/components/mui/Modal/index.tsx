@@ -4,8 +4,10 @@ import ModalTemplate, {type ModalTemplateProps} from "./ModalTemplate";
 export interface ModalProps {
     open : ModalTemplateProps["open"];
     handleOpen: ModalTemplateProps["handleOpen"];
-    title: ModalTemplateProps["title"];
-    message: ModalTemplateProps["content"];
+    title?: ModalTemplateProps["title"];
+    defaultTitle?: ModalTemplateProps["title"];
+    content?: ModalTemplateProps["content"];
+    defaultContent?: ModalTemplateProps["content"];
     onClickConfirm: ModalTemplateProps["onClickConfirm"];
     onClickCancel: ModalTemplateProps["onClickCancel"];
     confirmButtonLabel: ModalTemplateProps["confirmButtonLabel"];
@@ -20,7 +22,9 @@ export default function Modal(
         open,
         handleOpen,
         title,
-        message,
+        content,
+        defaultTitle,
+        defaultContent,
         onClickConfirm,
         onClickCancel,
     }: ModalProps
@@ -29,8 +33,8 @@ export default function Modal(
         <ModalTemplate
             open={open}
             handleOpen={handleOpen}
-            title={title}
-            content={message}
+            title={title ?? defaultTitle ?? ''}
+            content={content ?? defaultContent ?? ''}
             onClickConfirm={onClickConfirm}
             onClickCancel={onClickCancel}
         />

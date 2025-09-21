@@ -29,7 +29,7 @@ export const useFormModal = <T>(
         data
     }: UseModalParams<T>
 ) : UseFormModalResult<T> => {
-    const {modalProps, openModal, setMessage} = useModal({
+    const {modalProps, openModal, setContent} = useModal({
         confirmButtonLabel,
         cancelButtonLabel,
     });
@@ -38,7 +38,7 @@ export const useFormModal = <T>(
         return new Promise<T | null>(resolve => {
             openModal({
                 title: '',
-                message: form,
+                content: form,
                 onClickConfirm : () => resolve(data),
                 onClickCancel: () => resolve(null),
             })
