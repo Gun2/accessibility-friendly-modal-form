@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Dialog, DialogContent, DialogTitle, FormHelperText, styled} from "@mui/material";
+import {Dialog, DialogContent, DialogTitle, Fade, FormHelperText, styled} from "@mui/material";
 import ModalButtons, {type ModalButtonsProps} from "./button/ModalButtons";
 import {useEscapeKey} from "../../../hooks/useEscapeKey";
 
@@ -55,17 +55,24 @@ export default function ModalTemplate(
     useEscapeKey(() => {
         onClickClose();
     })
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     return (
         <CustomDialog
+            TransitionComponent={prefersReducedMotion ? React.Fragment : Fade}
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            aria-describedby="modal-desc"
             disableEscapeKeyDown={true}
             open={open}
             onClose={onClickClose}
         >
-            <DialogTitle ref={element => element?.focus()}>{title}</DialogTitle>
+            <DialogTitle id={"modal-title"} ref={element => element?.focus()}>{title}</DialogTitle>
             {
                 description && (
                     <DialogContent>
-                        <Description>
+                        <Description id="modal-desc">
                             {description}
                         </Description>
                     </DialogContent>
