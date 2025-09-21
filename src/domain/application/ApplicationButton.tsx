@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Button} from "@mui/material";
 import Modal from "../../components/mui/Modal";
-import ApplicationForm, {type ApplicationFormData, createInitData} from "../../pages/Home/ApplicationForm";
+import {type ApplicationFormData, createInitData} from "../../pages/Home/ApplicationForm";
 import {useFormModal} from "../../components/mui/FormModal/hooks/useFormModal";
+import ApplicationFormWrap from "../../pages/Home/ApplicationFormWrap";
 
 /**
  * 신청 폼 작성하기 버튼
@@ -11,21 +12,31 @@ import {useFormModal} from "../../components/mui/FormModal/hooks/useFormModal";
 export default function ApplicationButton(){
     const [data, setData] = useState<ApplicationFormData>(createInitData())
     const {openFromModal, modalProps} = useFormModal({
-        form: <ApplicationForm data={data} onChange={setData}/>,
+        form: <ApplicationFormWrap data={data} onChange={setData}/>,
         data: data,
-        confirmButtonLabel: "제출하기"
+        confirmButtonLabel: "제출하기",
+        defaultTitle: "신청 폼"
     });
-
+    /**
+     * form 초기화
+     */
+    const dataInit = useCallback(() => {
+        setData(createInitData())
+    }, []);
+    /**
+     * 버튼 클릭
+     */
+    const onClickButton = useCallback(() => {
+        dataInit()
+        openFromModal().then(res => {
+            console.log(res);
+        })
+    }, [openFromModal, dataInit]);
     return (
         <>
             <Button
                 variant="contained"
-                onClick={() => {
-                        openFromModal().then(res => {
-                            console.log(res);
-                        })
-                    }
-                }
+                onClick={onClickButton}
             >
                 📄 신청 폼 작성하기
             </Button>
