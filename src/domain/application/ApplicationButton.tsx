@@ -3,7 +3,6 @@ import {Button} from "@mui/material";
 import Modal from "../../components/mui/Modal";
 import ApplicationForm, {type ApplicationFormData, createInitData} from "../../pages/Home/ApplicationForm";
 import {useFormModal} from "../../components/mui/FormModal/hooks/useFormModal";
-import ApplicationFormWrap from "../../pages/Home/ApplicationFormWrap";
 
 /**
  * 신청 폼 작성하기 버튼
@@ -12,7 +11,7 @@ import ApplicationFormWrap from "../../pages/Home/ApplicationFormWrap";
 export default function ApplicationButton(){
     const [data, setData] = useState<ApplicationFormData>(createInitData())
     const {openFromModal, modalProps} = useFormModal({
-        form: <ApplicationFormWrap onChange={setData}/>,
+        form: <ApplicationForm data={data} onChange={setData}/>,
         data: data,
         confirmButtonLabel: "제출하기"
     });
