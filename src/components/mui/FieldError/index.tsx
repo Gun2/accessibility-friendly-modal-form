@@ -3,11 +3,13 @@ import {styled} from "@mui/material";
 
 
 export interface FieldErrorProps {
+    id?: string;
     name: string;
     validationErrors: ValidationErrors;
 }
-export default function FieldError(
+export default function Index(
     {
+        id,
         name,
         validationErrors,
     }: FieldErrorProps
@@ -16,7 +18,7 @@ export default function FieldError(
     if (!message) {
         return null;
     }
-    return <ErrorText>{message}</ErrorText>
+    return <ErrorText id={id} role={"alert"}>{message}</ErrorText>
 };
 
 const ErrorText = styled("div")(({theme}) => ({
