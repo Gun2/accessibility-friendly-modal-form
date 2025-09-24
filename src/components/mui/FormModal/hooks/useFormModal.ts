@@ -1,11 +1,14 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect, useRef} from "react";
 import {useModal} from "../../Modal/hooks/useModal";
 import type {ModalProps} from "../../Modal";
-import type {ModalTemplateProps} from "../../Modal/ModalTemplate";
 
 export interface UseModalParams<T> {
-    confirmButtonLabel?: ModalTemplateProps["confirmButtonLabel"];
-    cancelButtonLabel?: ModalTemplateProps["closeButtonLabel"];
+    //확인 전 로직 수행 (false 반환 시 확인 로직을 중단함)
+    beforeConfirm?: (data: T) => boolean;
+    confirmButtonLabel?: ModalProps["confirmButtonLabel"];
+    cancelButtonLabel?: ModalProps["closeButtonLabel"];
+    defaultTitle?: ModalProps["title"];
+    defaultDescription?: ModalProps["description"];
     form: React.ReactNode;
     data: T
 }
@@ -17,34 +20,58 @@ export interface UseFormModalResult<T> {
      * @param title 제목
      * @param message 내용
      */
-    openFromModal: () => Promise<T | null>;
+    openFromModal: (prams?: OpenFormModalParams) => Promise<T | null>;
 
+}
+
+export interface OpenFormModalParams {
+    title?: ModalProps["title"]
+    description?: ModalProps["description"]
 }
 
 export const useFormModal = <T>(
     {
         form,
+        defaultTitle,
+        beforeConfirm,
         confirmButtonLabel,
         cancelButtonLabel,
+        defaultDescription,
         data
     }: UseModalParams<T>
 ) : UseFormModalResult<T> => {
-    const {modalProps, openModal, setMessage} = useModal({
+    const {modalProps, openModal} = useModal({
         confirmButtonLabel,
-        cancelButtonLabel,
+        closeButtonLabel: cancelButtonLabel,
+        defaultTitle: defaultTitle,
+        defaultDescription: defaultDescription,
+        defaultContent: form,
     });
+    const dataRef = useRef<T>(data);
+    useEffect(() => {
+        dataRef.current = data;
+    }, [data]);
 
-    const openFormModal = useCallback(() : Promise<T | null> => {
+    const openFormModal = useCallback(({title, description} : OpenFormModalParams = {}) : Promise<T | null> => {
         return new Promise<T | null>(resolve => {
             openModal({
-                title: '',
-                message: form,
-                onClickConfirm : () => resolve(data),
+                title: title,
+                description: description,
+                onClickConfirm: () => {
+                    const process = beforeConfirm ? beforeConfirm(dataRef.current) : true;
+                    if (process) {
+                        resolve(dataRef.current)
+                        return true;
+                    }else {
+                        return false;
+                    }
+                },
                 onClickCancel: () => resolve(null),
             })
         })
 
-    }, [openModal, data]);
+    }, [openModal, data, beforeConfirm]);
+
     return {
         modalProps,
         openFromModal: openFormModal

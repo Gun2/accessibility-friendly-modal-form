@@ -4,12 +4,13 @@ import ModalTemplate, {type ModalTemplateProps} from "./ModalTemplate";
 export interface ModalProps {
     open : ModalTemplateProps["open"];
     handleOpen: ModalTemplateProps["handleOpen"];
-    title: ModalTemplateProps["title"];
-    message: ModalTemplateProps["content"];
+    title?: ModalTemplateProps["title"];
+    description?: ModalTemplateProps["description"];
+    content?: ModalTemplateProps["content"];
     onClickConfirm: ModalTemplateProps["onClickConfirm"];
     onClickCancel: ModalTemplateProps["onClickCancel"];
     confirmButtonLabel: ModalTemplateProps["confirmButtonLabel"];
-    cancelButtonLabel: ModalTemplateProps["closeButtonLabel"];
+    closeButtonLabel: ModalTemplateProps["closeButtonLabel"];
 }
 
 /**
@@ -20,19 +21,25 @@ export default function Modal(
         open,
         handleOpen,
         title,
-        message,
+        description,
+        content,
         onClickConfirm,
         onClickCancel,
+        confirmButtonLabel,
+        closeButtonLabel,
     }: ModalProps
 ){
     return (
         <ModalTemplate
             open={open}
             handleOpen={handleOpen}
-            title={title}
-            content={message}
+            title={title ?? ''}
+            description={description}
+            content={content ?? ''}
             onClickConfirm={onClickConfirm}
             onClickCancel={onClickCancel}
+            confirmButtonLabel={confirmButtonLabel}
+            closeButtonLabel={closeButtonLabel}
         />
     )
 };

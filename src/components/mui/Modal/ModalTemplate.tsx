@@ -1,14 +1,17 @@
 import React, {useCallback} from 'react';
-import {Button, Dialog, DialogContent, DialogTitle, Stack, styled} from "@mui/material";
+import {DialogContent, DialogTitle, FormHelperText, styled} from "@mui/material";
 import ModalButtons, {type ModalButtonsProps} from "./button/ModalButtons";
-import {useEscapeKey} from "../../../hooks/useEscapeKey";
+import BaseModal from "./BaseModal";
 
 export interface ModalTemplateProps {
     open: boolean;
     handleOpen: (open: boolean) => void;
-    onClickConfirm: () => void;
+    //확인 버튼 클릭 시 수행 함수, 반환값이 false일 경우 로직을 중단시킴
+    onClickConfirm: () => undefined | void | boolean;
     onClickCancel: () => void;
     title: string;
+    //설명
+    description?: string;
     content: React.ReactNode;
     confirmButtonLabel?: ModalButtonsProps["confirmButtonLabel"];
     closeButtonLabel?: ModalButtonsProps["closeButtonLabel"];
@@ -19,7 +22,8 @@ export interface ModalTemplateProps {
  * @param open modal 표시 상태
  * @param handleOpen modal 표시 상태 핸들링
  * @param title modal 제목
- * @param message modal 메세지
+ * @param content modal 내용
+ * @param description modal 설명
  * @param onClickConfirm modal 확인 클릭 시 호출
  * @param onClickCancel modal 취소 클릭 시 호출
  * @param confirmButtonLabel 확인 버튼 라벨
@@ -31,6 +35,7 @@ export default function ModalTemplate(
         handleOpen,
         title,
         content,
+        description,
         onClickConfirm,
         onClickCancel,
         confirmButtonLabel,
@@ -42,19 +47,30 @@ export default function ModalTemplate(
         onClickCancel?.()
     }, [handleOpen, onClickCancel]);
     const onClickConfirmButton = useCallback(() => {
-        onClickConfirm?.();
-        onClickClose();
+        const result = onClickConfirm?.();
+        if (result !== false) {
+            onClickClose();
+        }
     }, [onClickClose, onClickConfirm]);
-    useEscapeKey(() => {
-        onClickClose();
-    })
     return (
-        <CustomDialog
-            disableEscapeKeyDown={true}
+        <BaseModal
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            aria-describedby="modal-desc"
+            disableEscapeKeyDown={false}
             open={open}
             onClose={onClickClose}
         >
-            <DialogTitle ref={element => element?.focus()}>{title}</DialogTitle>
+            <DialogTitle id={"modal-title"} ref={element => element?.focus()}>{title}</DialogTitle>
+            {
+                description && (
+                    <DialogContent>
+                        <Description id="modal-desc">
+                            {description}
+                        </Description>
+                    </DialogContent>
+                )
+            }
             <DialogContent>
                 {content}
             </DialogContent>
@@ -67,12 +83,13 @@ export default function ModalTemplate(
                 />
             </DialogContent>
 
-        </CustomDialog>
+        </BaseModal>
     );
 };
 
-const CustomDialog = styled(Dialog)((props) => ({
-    "& .MuiPaper-root" : {
-        minWidth: 300
-    }
-}))
+/**
+ * 설명 문구
+ * @constructor
+ */
+
+const Description = styled(FormHelperText)({})

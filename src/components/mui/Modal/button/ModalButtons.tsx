@@ -15,7 +15,7 @@ export interface ModalButtonsProps {
  * @param onClickCancelButton 닫기 버튼 클릭
  * @param onClickConfirmButton 확인 버튼 클릭
  * @param confirmButtonLabel 확인 버튼 라벨
- * @param cancelButtonLabel 닫기 버튼 라벨
+ * @param closeButtonLabel 닫기 버튼 라벨
  * @constructor
  */
 export default function ModalButtons(

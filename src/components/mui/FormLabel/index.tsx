@@ -2,18 +2,20 @@ import {Stack} from "@mui/material";
 
 
 export interface FormLabelProps {
-    label: string;
+    label: React.ReactNode;
+    htmlFor?: string;
     children?: React.ReactNode;
 }
 export default function FormLabel(
     {
         label,
+        htmlFor,
         children
     }: FormLabelProps
 ){
     return (
         <Stack>
-            <div style={{fontSize: "0.7rem"}}>{label}</div>
+            <label style={{fontSize: "0.7rem"}} htmlFor={htmlFor}>{label}</label>
             {children}
         </Stack>
     )
